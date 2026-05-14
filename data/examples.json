@@ -1,0 +1,12 @@
+{
+    "sentimento": [
+    {
+        "input": "Produto excelente",
+        "output": "POSITIVO"
+    },
+    {
+        "input": "Muito ruim",
+        "output": "NEGATIVO"
+    }
+]
+}

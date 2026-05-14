@@ -1,0 +1,70 @@
+{
+  "classificacao_sentimento": [
+    {
+      "input": "Produto excelente, entrega rápida e ótima qualidade.",
+      "esperado": "POSITIVO"
+    },
+    {
+      "input": "Veio quebrado e atrasou muito.",
+      "esperado": "NEGATIVO"
+    },
+    {
+      "input": "Preço bom mas qualidade mediana.",
+      "esperado": "MISTO"
+    },
+    {
+      "input": "Gostei bastante do atendimento.",
+      "esperado": "POSITIVO"
+    },
+    {
+      "input": "Péssima experiência de compra.",
+      "esperado": "NEGATIVO"
+    }
+  ],
+
+  "extracao_dados": [
+    {
+      "input": "Notebook Dell de R$3500 com tela quebrada.",
+      "esperado": "Notebook Dell"
+    },
+    {
+      "input": "iPhone 14 de R$5000 com bateria defeituosa.",
+      "esperado": "iPhone 14"
+    },
+    {
+      "input": "TV Samsung de R$2700 com pixels mortos.",
+      "esperado": "TV Samsung"
+    },
+    {
+      "input": "Mouse Logitech de R$120 com clique falhando.",
+      "esperado": "Mouse Logitech"
+    },
+    {
+      "input": "Monitor LG de R$900 sem imagem.",
+      "esperado": "Monitor LG"
+    }
+  ],
+
+  "sumarizacao": [
+    {
+      "input": "A empresa registrou aumento de vendas no último trimestre devido ao crescimento das operações digitais e melhoria do atendimento.",
+      "esperado": "crescimento"
+    },
+    {
+      "input": "O projeto atrasou devido a problemas técnicos e falta de integração entre equipes.",
+      "esperado": "atrasou"
+    },
+    {
+      "input": "A nova campanha aumentou significativamente o engajamento nas redes sociais.",
+      "esperado": "engajamento"
+    },
+    {
+      "input": "Os custos operacionais reduziram após automação de processos internos.",
+      "esperado": "reduziram"
+    },
+    {
+      "input": "A satisfação dos clientes melhorou após atualização do sistema.",
+      "esperado": "melhorou"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+{
+    "classificacao": "Classifique o sentimento do texto.",
+    "extracao": "Extraia os dados do texto.",
+    "sumarizacao": "Resuma o conteúdo."
+}
