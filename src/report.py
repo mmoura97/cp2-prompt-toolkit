@@ -42,15 +42,24 @@ def grafico_custo(df):
 
 def grafico_temperatura(resultados_temp):
     os.makedirs("output/graficos", exist_ok=True)
+
     temps = [item["temperatura"] for item in resultados_temp]
     consistencias = [item["consistencia"] for item in resultados_temp]
-
     plt.figure(figsize=(8, 5))
-    plt.plot(temps, consistencias, marker="o")
+    plt.plot(
+        temps,
+        consistencias,
+        marker="o"
+    )
+
     plt.title("Consistência por Temperatura")
     plt.xlabel("Temperatura")
     plt.ylabel("Consistência (%)")
-    plt.ylim(0, 100)
+    plt.ylim(90, 101)
+    plt.xticks(temps)
+    for x, y in zip(temps, consistencias):
+        plt.text(x, y + 0.2, f"{y:.0f}%", ha="center")
+    plt.grid(True, alpha=0.3)
     plt.tight_layout()
     plt.savefig("output/graficos/temperatura.png")
     plt.close()
