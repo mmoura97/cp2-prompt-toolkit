@@ -10,6 +10,7 @@ from src.report import (
     grafico_custo,
     grafico_temperatura,
     recomendar,
+    gerar_resumo_resultados,
 )
 
 
@@ -98,6 +99,8 @@ def main():
 
     grafico_temperatura(temperaturas)
     recomendar(resultado_df)
+
+    gerar_resumo_resultados(resultado_df)
 
 
 if __name__ == "__main__":

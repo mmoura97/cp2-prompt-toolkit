@@ -12,50 +12,125 @@ def gerar_tabela(resultados):
 
 
 def grafico_acuracia(df):
+    import os
+    import matplotlib.pyplot as plt
+    import numpy as np
+
     os.makedirs("output/graficos", exist_ok=True)
+
     media = df.groupby(["tarefa", "tecnica"])["acuracia"].mean().unstack()
 
+    tarefas = media.index
+    tecnicas = media.columns
+
+    x = np.arange(len(tarefas))
+    largura = 0.2
+
     plt.figure(figsize=(10, 6))
-    media.plot(kind="bar")
+
+    for i, tecnica in enumerate(tecnicas):
+        valores = media[tecnica]
+
+        barras = plt.bar(x + i * largura, valores, largura, label=tecnica)
+
+        # valores nas barras
+        for barra in barras:
+            altura = barra.get_height()
+
+            plt.text(
+                barra.get_x() + barra.get_width() / 2,
+                altura + 0.02,
+                f"{altura:.1f}",
+                ha="center",
+                va="bottom",
+                fontsize=9,
+            )
+
     plt.title("Acurácia por Técnica e Tarefa")
     plt.ylabel("Acurácia média")
     plt.xlabel("Tarefa")
-    plt.xticks(rotation=30, ha="right")
+
+    plt.xticks(x + largura * (len(tecnicas) - 1) / 2, tarefas, rotation=20)
+
+    plt.ylim(0, 1.15)
+
+    plt.legend(title="Técnica")
+
+    plt.grid(axis="y", alpha=0.3)
+
     plt.tight_layout()
-    plt.savefig("output/graficos/acuracia.png")
+
+    plt.savefig("output/graficos/acuracia.png", dpi=300)
+
     plt.close()
 
 
 def grafico_custo(df):
-    media = df.groupby("tecnica")["tokens_total"].mean()
+    import os
+    import matplotlib.pyplot as plt
 
-    plt.figure(figsize=(8, 5))
-    media.plot(kind="bar")
+    os.makedirs("output/graficos", exist_ok=True)
+
+    custo = df.groupby("tecnica")["tokens_total"].mean().sort_values(ascending=False)
+
+    plt.figure(figsize=(9, 5))
+
+    barras = plt.bar(custo.index, custo.values)
+
     plt.title("Custo Médio por Técnica")
-    plt.ylabel("Tokens médios")
     plt.xlabel("Técnica")
+    plt.ylabel("Tokens médios")
+
     plt.xticks(rotation=30, ha="right")
+
+    for barra in barras:
+        altura = barra.get_height()
+        plt.text(
+            barra.get_x() + barra.get_width() / 2,
+            altura + 1,
+            f"{altura:.0f}",
+            ha="center",
+            va="bottom",
+        )
+
     plt.tight_layout()
     plt.savefig("output/graficos/custo.png")
     plt.close()
 
 
 def grafico_temperatura(resultados_temp):
+    import os
+    import matplotlib.pyplot as plt
+
     os.makedirs("output/graficos", exist_ok=True)
 
     temps = [item["temperatura"] for item in resultados_temp]
     consistencias = [item["consistencia"] for item in resultados_temp]
+
+    labels = [str(t) for t in temps]
+
     plt.figure(figsize=(8, 5))
-    plt.plot(temps, consistencias, marker="o")
+
+    barras = plt.bar(labels, consistencias)
 
     plt.title("Consistência por Temperatura")
     plt.xlabel("Temperatura")
     plt.ylabel("Consistência (%)")
+
     plt.ylim(90, 101)
-    plt.xticks(temps)
-    for x, y in zip(temps, consistencias):
-        plt.text(x, y + 0.2, f"{y:.0f}%", ha="center")
-    plt.grid(True, alpha=0.3)
+
+    for barra in barras:
+        altura = barra.get_height()
+        plt.text(
+            barra.get_x() + barra.get_width() / 2,
+            altura + 0.2,
+            f"{altura:.0f}%",
+            ha="center",
+            va="bottom",
+        )
+
+    plt.grid(axis="y", alpha=0.3)
+
     plt.tight_layout()
     plt.savefig("output/graficos/temperatura.png")
     plt.close()
@@ -100,3 +175,37 @@ def recomendar(df):
     )
 
     return recomendacoes
+
+
+def gerar_resumo_resultados(df):
+    import os
+
+    os.makedirs("output", exist_ok=True)
+
+    resumo = (
+        df.groupby(["tarefa", "tecnica"])
+        .agg(
+            acuracia_media=("acuracia", "mean"),
+            tokens_medios=("tokens_total", "mean"),
+            tempo_medio_ms=("tempo_ms", "mean"),
+        )
+        .reset_index()
+    )
+
+    resumo["acuracia_percentual"] = (resumo["acuracia_media"] * 100).round(1)
+
+    resumo["tokens_medios"] = resumo["tokens_medios"].round(0).astype(int)
+
+    resumo["tempo_medio_ms"] = resumo["tempo_medio_ms"].round(2)
+
+    resumo = resumo[
+        [
+            "tarefa",
+            "tecnica",
+            "acuracia_percentual",
+            "tokens_medios",
+            "tempo_medio_ms",
+        ]
+    ]
+
+    resumo.to_csv("output/resumo_resultados.csv", index=False, encoding="utf-8-sig")

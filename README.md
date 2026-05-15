@@ -76,56 +76,126 @@ prompt_toolkit/
 │
 └── output/
 
-⚙️ Configuração
+# ▶️ Como executar o projeto
 
-Crie um arquivo .env na raiz do projeto:
+## 1️⃣ Clonar o repositório
 
+```bash
+git clone URL_DO_REPOSITORIO
+```
+
+---
+
+## 2️⃣ Entrar na pasta do projeto
+
+```bash
+cd cp2-prompt-toolkit
+```
+
+---
+
+# 🐍 Criando ambiente virtual
+
+## Windows
+
+```bash
+py -m venv venv
+```
+
+ou
+
+```bash
+python -m venv venv
+```
+
+### Ativar ambiente virtual (Windows PowerShell)
+
+```bash
+.\venv\Scripts\Activate.ps1
+```
+
+---
+
+## Linux / MacOS
+
+```bash
+python3 -m venv venv
+```
+
+### Ativar ambiente virtual (Linux/MacOS)
+
+```bash
+source venv/bin/activate
+```
+
+---
+
+# 📦 Instalar dependências
+
+## Windows
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+## Linux / MacOS
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+# ⚙️ Configuração da API
+
+Crie um arquivo `.env` na raiz do projeto:
+
+```env
 OLLAMA_API_KEY=sua_chave_aqui
 OLLAMA_HOST=https://ollama.com
 MODEL_NAME=gpt-oss:120b
 TIMEOUT=120
+```
 
-⚠️ O arquivo .env não deve ser enviado ao GitHub.
+---
 
-▶️ Como executar
+# 🚀 Executando o projeto
 
-1️⃣ Criar ambiente virtual
-python -m venv venv
+## Windows
 
-2️⃣ Ativar ambiente virtual
+```bash
+py main.py
+```
 
-Windows PowerShell
-.\venv\Scripts\Activate.ps1
+ou
 
-Linux / MacOS
-source venv/bin/activate
-
-3️⃣ Instalar dependências
-
-pip install -r requirements.txt
-
-
-4️⃣ Executar projeto
+```bash
 python main.py
+```
 
-📊 Métricas Avaliadas
+---
 
-O sistema mede automaticamente:
+## Linux / MacOS
 
-Acurácia
-Tokens utilizados
-Tempo de resposta
-Consistência
-Custo médio por técnica
-📈 Resultados Gerados
+```bash
+python3 main.py
+```
 
-Após a execução, o projeto gera:
+---
 
-resultados.csv
-recomendacoes.csv
-gráfico de acurácia
-gráfico de custo
-gráfico de consistência
+# 📊 Arquivos gerados
+
+Após a execução, serão gerados:
+
+```text
+output/resultados.csv
+output/recomendacoes.csv
+output/graficos/acuracia.png
+output/graficos/custo.png
+output/graficos/temperatura.png
+```
 
 🔄 Fluxo do Sistema
 Inputs
