@@ -213,9 +213,13 @@ A chave da API deve permanecer apenas no arquivo .env.
 O repositório contém apenas o arquivo .env.example.
 
 👥 Integrantes
-Nome Integrante 1
-Nome Integrante 2
-Nome Integrante 3
+
+Matheus Moura da Silva | RM566782 
+Kaue Souza Rodrigues | RM557716
+Murylo Silva Amaral | RM568241 
+Pedro Henrique Camacho de Alencar | RM568071 
+Igor Mota Marran | RM567823
+
 
 🎯 Disciplina
 
