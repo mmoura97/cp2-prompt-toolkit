@@ -46,11 +46,7 @@ def grafico_temperatura(resultados_temp):
     temps = [item["temperatura"] for item in resultados_temp]
     consistencias = [item["consistencia"] for item in resultados_temp]
     plt.figure(figsize=(8, 5))
-    plt.plot(
-        temps,
-        consistencias,
-        marker="o"
-    )
+    plt.plot(temps, consistencias, marker="o")
 
     plt.title("Consistência por Temperatura")
     plt.xlabel("Temperatura")
@@ -71,16 +67,13 @@ def recomendar(df):
     print("\nRecomendação por tarefa:")
 
     for tarefa, grupo in df.groupby("tarefa"):
-        resumo = grupo.groupby("tecnica").agg({
-            "acuracia": "mean",
-            "tokens_total": "mean",
-            "tempo_ms": "mean"
-        })
+        resumo = grupo.groupby("tecnica").agg(
+            {"acuracia": "mean", "tokens_total": "mean", "tempo_ms": "mean"}
+        )
 
         # Critério: melhor acurácia; em empate, menor custo em tokens.
         resumo = resumo.sort_values(
-            by=["acuracia", "tokens_total"],
-            ascending=[False, True]
+            by=["acuracia", "tokens_total"], ascending=[False, True]
         )
 
         melhor = resumo.index[0]
@@ -91,7 +84,7 @@ def recomendar(df):
             "melhor_tecnica": melhor,
             "acuracia_media": round(linha["acuracia"], 2),
             "tokens_medios": round(linha["tokens_total"], 2),
-            "tempo_medio_ms": round(linha["tempo_ms"], 2)
+            "tempo_medio_ms": round(linha["tempo_ms"], 2),
         }
 
         recomendacoes.append(recomendacao)
@@ -103,9 +96,7 @@ def recomendar(df):
         )
 
     pd.DataFrame(recomendacoes).to_csv(
-        "output/recomendacoes.csv",
-        index=False,
-        encoding="utf-8"
+        "output/recomendacoes.csv", index=False, encoding="utf-8"
     )
 
     return recomendacoes

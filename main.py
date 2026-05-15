@@ -1,12 +1,7 @@
 import json
 
 from src.tasks import TASKS
-from src.techniques import (
-    zero_shot,
-    few_shot,
-    chain_of_thought,
-    role_prompting
-)
+from src.techniques import zero_shot, few_shot, chain_of_thought, role_prompting
 from src.llm_client import LLMClient
 from src.evaluator import medir_acuracia, testar_temperatura
 from src.report import (
@@ -14,7 +9,7 @@ from src.report import (
     grafico_acuracia,
     grafico_custo,
     grafico_temperatura,
-    recomendar
+    recomendar,
 )
 
 
@@ -33,7 +28,9 @@ def main():
     print(mensagem)
 
     if not conectado:
-        print("\nAtenção: o projeto continuará, mas as respostas virão vazias até o Ollama estar ativo.")
+        print(
+            "\nAtenção: o projeto continuará, mas as respostas virão vazias até o Ollama estar ativo."
+        )
 
     resultados = []
     primeiro_prompt_valido = None
@@ -51,7 +48,9 @@ def main():
             tecnicas = {
                 "zero_shot": zero_shot(tarefa, texto),
                 "few_shot": few_shot(tarefa, texto, tarefa["exemplos_fewshot"]),
-                "chain_of_thought": chain_of_thought(tarefa, texto, tarefa["passos_cot"])
+                "chain_of_thought": chain_of_thought(
+                    tarefa, texto, tarefa["passos_cot"]
+                ),
             }
 
             persona = personas[tarefa["persona"]]
@@ -70,19 +69,21 @@ def main():
                 acuracia = medir_acuracia(resposta["resposta"], esperado)
                 tokens_total = resposta["tokens_prompt"] + resposta["tokens_resposta"]
 
-                resultados.append({
-                    "tarefa": nome,
-                    "tecnica": tecnica,
-                    "input": texto,
-                    "esperado": esperado,
-                    "resposta": resposta["resposta"],
-                    "erro": resposta["erro"],
-                    "tokens_prompt": resposta["tokens_prompt"],
-                    "tokens_resposta": resposta["tokens_resposta"],
-                    "tokens_total": tokens_total,
-                    "tempo_ms": resposta["tempo_ms"],
-                    "acuracia": acuracia
-                })
+                resultados.append(
+                    {
+                        "tarefa": nome,
+                        "tecnica": tecnica,
+                        "input": texto,
+                        "esperado": esperado,
+                        "resposta": resposta["resposta"],
+                        "erro": resposta["erro"],
+                        "tokens_prompt": resposta["tokens_prompt"],
+                        "tokens_resposta": resposta["tokens_resposta"],
+                        "tokens_total": tokens_total,
+                        "tempo_ms": resposta["tempo_ms"],
+                        "acuracia": acuracia,
+                    }
+                )
 
     resultado_df = gerar_tabela(resultados)
     grafico_acuracia(resultado_df)
@@ -92,7 +93,7 @@ def main():
         client,
         primeiro_prompt_valido,
         esperado=primeiro_esperado_valido,
-        system=primeiro_system_valido
+        system=primeiro_system_valido,
     )
 
     grafico_temperatura(temperaturas)

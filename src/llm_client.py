@@ -14,9 +14,7 @@ class LLMClient:
 
         self.client = Client(
             host="https://ollama.com",
-            headers={
-                "Authorization": "Bearer " + os.getenv("OLLAMA_API_KEY", "")
-            }
+            headers={"Authorization": "Bearer " + os.getenv("OLLAMA_API_KEY", "")},
         )
 
     def contar_tokens(self, texto):
@@ -27,13 +25,8 @@ class LLMClient:
         try:
             response = self.client.chat(
                 model=self.model,
-                messages=[
-                    {
-                        "role": "user",
-                        "content": "Responda apenas OK"
-                    }
-                ],
-                stream=False
+                messages=[{"role": "user", "content": "Responda apenas OK"}],
+                stream=False,
             )
 
             if response["message"]["content"]:
@@ -51,24 +44,15 @@ class LLMClient:
             messages = []
 
             if system:
-                messages.append({
-                    "role": "system",
-                    "content": system
-                })
+                messages.append({"role": "system", "content": system})
 
-            messages.append({
-                "role": "user",
-                "content": prompt
-            })
+            messages.append({"role": "user", "content": prompt})
 
             response = self.client.chat(
                 model=self.model,
                 messages=messages,
-                options={
-                    "num_predict": max_tokens,
-                    "temperature": temp
-                },
-                stream=False
+                options={"num_predict": max_tokens, "temperature": temp},
+                stream=False,
             )
 
             fim = time.time()
@@ -83,7 +67,7 @@ class LLMClient:
                 "tokens_prompt": tokens_prompt,
                 "tokens_resposta": tokens_resposta,
                 "tempo_ms": round((fim - inicio) * 1000, 2),
-                "erro": ""
+                "erro": "",
             }
 
         except Exception as e:
@@ -92,5 +76,5 @@ class LLMClient:
                 "tokens_prompt": self.contar_tokens(prompt),
                 "tokens_resposta": 0,
                 "tempo_ms": 0,
-                "erro": f"Erro API Ollama Cloud: {str(e)}"
+                "erro": f"Erro API Ollama Cloud: {str(e)}",
             }

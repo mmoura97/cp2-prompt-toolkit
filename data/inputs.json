@@ -21,7 +21,6 @@
       "esperado": "NEGATIVO"
     }
   ],
-
   "extracao_dados": [
     {
       "input": "Notebook Dell de R$3500 com tela quebrada.",
@@ -44,7 +43,6 @@
       "esperado": "Monitor LG"
     }
   ],
-
   "sumarizacao": [
     {
       "input": "A empresa registrou aumento de vendas no último trimestre devido ao crescimento das operações digitais e melhoria do atendimento.",

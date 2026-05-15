@@ -65,13 +65,17 @@ def testar_temperatura(client, prompt, esperado=None, system=""):
             respostas_temp.append(resposta["resposta"])
 
         consistencia = medir_consistencia(respostas_temp)
-        acuracia = medir_acuracia(respostas_temp[0], esperado) if esperado is not None else 0
+        acuracia = (
+            medir_acuracia(respostas_temp[0], esperado) if esperado is not None else 0
+        )
 
-        resultados.append({
-            "temperatura": temp,
-            "respostas": respostas_temp,
-            "consistencia": consistencia,
-            "acuracia": acuracia
-        })
+        resultados.append(
+            {
+                "temperatura": temp,
+                "respostas": respostas_temp,
+                "consistencia": consistencia,
+                "acuracia": acuracia,
+            }
+        )
 
     return resultados

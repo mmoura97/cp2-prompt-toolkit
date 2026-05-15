@@ -22,7 +22,6 @@ FORMATO DE SAÍDA:
     return prompt
 
 
-
 def adicionar_exemplos(prompt, exemplos):
     bloco = "\n\nEXEMPLOS:\n"
 
@@ -31,7 +30,6 @@ def adicionar_exemplos(prompt, exemplos):
         bloco += f'Output: {exemplo["output"]}\n\n'
 
     return prompt + bloco
-
 
 
 def adicionar_cot(prompt, passos):
